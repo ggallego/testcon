@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PIDFILE=/var/run/testcon.pid
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+        log_daemon_msg "Starting internet connection tester"
+        /etc/init.d/testcond &
+        echo $! > $PIDFILE
+        log_end_msg $?
+    ;;
+  stop)
+        log_daemon_msg "Stopping internet connection tester"
+        PID=$(cat $PIDFILE)
+        kill -9 "$PID"
+        log_end_msg $?
+    ;;
+  *)
+    echo "Usage: /etc/init.d/testcon {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

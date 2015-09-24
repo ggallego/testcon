@@ -1,0 +1,39 @@
+#!/bin/bash
+
+###############################################
+# INTERNET CONNECTION TESTER 
+###############################################
+
+TARGET=8.8.8.8
+TIMEOUT=60
+VERBOSE=false
+LOGFILE=/home/<USER>/Dropbox/Aplications/testcon/internet_log.txt
+
+##### STARTING CONNECTION TESTER
+echo "$(date) : Server is up." >> $LOGFILE
+while [ "$itest" == "" ] 
+do
+    echo "$(date) : ... waiting internet connection." >> $LOGFILE
+    sleep 5
+    itest=$(fping $TARGET | grep alive)
+done
+echo "$(date) : Internet connection established." >> $LOGFILE
+
+##### TEST CONNECTION FOREVER
+while [ "1" == "1" ]
+do
+    itest=$(fping $TARGET | grep alive)
+    if [ "$itest" == "" ]
+    then
+        echo "$(date) : Internet is down." >> $LOGFILE
+        while [ "$itest" == "" ]
+        do
+            if $VERBOSE ; then echo "$(date) : Internet is down." >> $LOGFILE ; fi
+            sleep $TIMEOUT
+            itest=$(fping $TARGET | grep alive)
+        done
+        echo "$(date) : Internet is up." >> $LOGFILE
+    fi
+    if $VERBOSE ; then echo "$(date) : Internet is up." >> $LOGFILE ; fi
+    sleep $TIMEOUT
+done
