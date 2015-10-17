@@ -10,12 +10,12 @@ Based on the work of Rafael from http://askubuntu.com/questions/27954/how-can-i-
 
 1 - Install fping:
 ```
-apt-get install fping
+sudo apt-get install fping
 ```
 
 2 - Copy the testcon script to /etc/init.d:
 ```
-cp testcon /etc/init.d
+sudo cp testcon /etc/init.d
 ```
 
 3 - Edit the testcond script (at least the LOGFILE entry):
@@ -30,7 +30,7 @@ LOGFILE=/home/<USER>/Dropbox/Aplications/testcon/internet_log.txt
 
 4 - Copy the testcond script to /etc/init.d:
 ```
-cp testcond /etc/init.d
+sudo cp testcond /etc/init.d
 ```
 
 5 - Configure the testcon to start on boot:
